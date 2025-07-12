@@ -1,12 +1,12 @@
 Language: text
-Lines of Code: 4
+Lines of Code: 12
 File: logs/version_log.txt
 Version: 1.0.01
 Project: ChatGPT Conversation Exporter
 Repository: chatgpt_exporter
 Author: Rod Sanchez
 Created: 2025-07-12 05:54
-Last Edited: 2025-07-12 14:30
+Last Edited: 2025-07-13 10:00
 
 Version: 1.0.0
 Date of change: 2025-07-12 05:54
@@ -17,3 +17,9 @@ Version: 1.0.01
 Date of change: 2025-07-12 14:30
 Change: feature (web API and UI refactor)
 Modifications: +multiple files
+Version: 1.0.02
+Date of change: 2025-07-13 10:00
+Change: feature (startup scripts and docs)
+Modifications: +33, -5
+Last Modification Comment: added cross-platform startup scripts
+
