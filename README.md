@@ -1,12 +1,12 @@
 # Language: text
-# Lines of Code: 48
+# Lines of Code: 52
 # File: README.md
-# Version: 1.0.01
+# Version: 1.0.02
 # Project: ChatGPT Conversation Exporter
 # Repository: chatgpt_exporter
 # Author: Rod Sanchez
 # Created: 2025-07-12 05:54
-# Last Edited: 2025-07-12 14:30
+# Last Edited: 2025-07-13 10:00
 
 # ChatGPT Conversation Exporter
 
@@ -36,10 +36,12 @@ cd src
 python chatgpt_exporter.py
 ```
 
-Run the FastAPI server for the web interface:
+Run the FastAPI server for the web interface using the provided scripts:
 
 ```bash
-uvicorn src.utils.api:app --reload
+./start_app.sh   # Unix/macOS
+:: or
+start_app.bat    # Windows
 ```
 
 Open `web/html/index.html` in your browser and start exporting.
@@ -63,6 +65,8 @@ chatgpt_exporter/
 │   │   └── index.html
 │   └── js/
 │       └── scripts.js
+├── start_app.sh
+├── start_app.bat
 └── README.md
 ```
 
