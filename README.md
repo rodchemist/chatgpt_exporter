@@ -1,12 +1,3 @@
-Language: Markdown
-Lines of Code: 47
-File: README.md
-Version: 1.0.0
-Project: ChatGPT Conversation Exporter
-Repository: chatgpt_exporter
-Author: Rod Sanchez
-Created: 2025-07-12 05:54
-Last Edited: 2025-07-12 05:54
 
 # ChatGPT Conversation Exporter
 
