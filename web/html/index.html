@@ -1,0 +1,34 @@
+<!-- Language: HTML5 -->
+<!-- Lines of Code: 34 -->
+<!-- File: web/html/index.html -->
+<!-- Version: 1.0.0 -->
+<!-- Project: ChatGPT Conversation Exporter -->
+<!-- Repository: chatgpt_exporter -->
+<!-- Author: Rod Sanchez -->
+<!-- Created: 2025-07-12 05:54 -->
+<!-- Last Edited: 2025-07-12 05:54 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatGPT Exporter</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>ChatGPT Exporter</h1>
+        <input type="file" id="zip" accept=".zip">
+        <div class="options">
+            <label><input type="checkbox" value="txt" checked>TXT</label>
+            <label><input type="checkbox" value="html" checked>HTML</label>
+            <label><input type="checkbox" value="md" checked>MD</label>
+            <label><input type="checkbox" value="sqlite" checked>SQLite</label>
+        </div>
+        <button id="start">Start</button>
+        <div id="progress"></div>
+        <a id="download" style="display:none">Download</a>
+    </div>
+    <script src="../js/scripts.js"></script>
+</body>
+</html>

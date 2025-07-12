@@ -1,69 +1,54 @@
-
 # ChatGPT Conversation Exporter
 
-ChatGPT Conversation Exporter is a Python-based GUI tool that extracts and exports your ChatGPT conversations from a ZIP file. It supports multiple export formats including plain text, HTML (with a built-in search), Markdown, and an SQLite database.
+ChatGPT Conversation Exporter is a Python-based tool to extract and export your ChatGPT conversations from a ZIP file. It now includes a modern web interface powered by FastAPI and WebSockets.
 
 ## Features
 
 - **Multiple Export Formats:** TXT, HTML, Markdown, and SQLite.
 - **Searchable HTML Index:** A dynamically generated HTML index to search conversations by text, title, role, or date.
-- **User-Friendly GUI:** Built with Tkinter for easy file and folder selection.
-- **Progress Feedback:** Visual progress bar and status updates during the export process.
+- **User-Friendly Web UI:** Upload ZIP files directly in the browser.
+- **Real-Time Progress:** WebSocket updates while processing.
 
 ## Installation
 
-1. **Clone the Repository:**
-
-   ```bash
-   git clone https://github.com/roderickks/chatgpt_exporter.git
-   cd chatgpt_exporter
-   ```
-2. **Set Up a Virtual Environment (Optional but recommended):**
-
-   ```bash
-   python -m venv venv
-   ```
-3. **Install Dependencies:**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
 ## Usage
 
-Run the Exporter:
-
-Navigate to the src folder and run the script:
+Run the FastAPI server:
 
 ```bash
-cd src
-python chatgpt_exporter.py
+python src/utils/server.py
 ```
 
-Export Directory:
-
-When running the tool, choose your output directory.
-
-ZIP File:
-
-Select the ZIP file that contains your conversations.json. The tool will extract and export the conversations accordingly.
+Then open `web/html/index.html` in your browser to use the interface.
 
 ## Project Structure
 
 ```
 chatgpt_exporter/
-├── .gitignore
-├── LICENSE
-├── README.md
+├── src/
+│   └── utils/
+│       ├── exporter_utils.py
+│       └── server.py
+├── web/
+│   ├── html/
+│   │   └── index.html
+│   ├── css/
+│   │   └── styles.css
+│   └── js/
+│       └── scripts.js
+├── config/
+├── docs/
+├── logs/
+│   └── version_log.txt
+├── data/
+│   └── cache/
 ├── requirements.txt
-├── setup.py
-└── src/
-    └── chatgpt_exporter.py
+└── README.md
 ```
-
-## Contributing
-
-Contributions, issues, and feature requests are welcome! Please check the issues page for open issues.
 
 ## License
 
