@@ -1,0 +1,22 @@
+# Language: plain text
+# Lines of Code: 14
+# File: .gitignore
+# Version: 1.0.0
+# Project: ChatGPT Conversation Exporter
+# Repository: chatgpt_exporter
+# Author: Rod Sanchez
+# Created: 2025-07-12 05:54
+# Last Edited: 2025-07-12 05:54
+
+__pycache__/
+*.py[cod]
+*$py.class
+build/
+dist/
+*.egg-info/
+venv/
+env/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
