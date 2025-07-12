@@ -1,2 +1,4 @@
-
+fastapi
+uvicorn
+python-multipart
 tqdm>=4.0.0
