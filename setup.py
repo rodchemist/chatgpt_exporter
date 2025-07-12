@@ -2,18 +2,18 @@
 # Language: Python 3.12
 # Lines of Code: 24
 # File: setup.py
-# Version: 1.0.0
+# Version: 1.0.01
 # Project: ChatGPT Conversation Exporter
 # Repository: chatgpt_exporter
 # Author: Rod Sanchez
 # Created: 2025-07-12 05:54
-# Last Edited: 2025-07-12 05:54
+# Last Edited: 2025-07-12 14:30
 
 import setuptools
 
 setuptools.setup(
     name="chatgpt_exporter",
-    version="1.0.0",
+    version="1.0.01",
     author="Rod Sanchez",
     author_email="your.email@example.com",
     description="A tool to export ChatGPT conversations into various formats with a searchable HTML index.",

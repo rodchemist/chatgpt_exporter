@@ -1,2 +1,15 @@
+# Language: text
+# Lines of Code: 4
+# File: requirements.txt
+# Version: 1.0.01
+# Project: ChatGPT Conversation Exporter
+# Repository: chatgpt_exporter
+# Author: Rod Sanchez
+# Created: 2025-07-12 05:54
+# Last Edited: 2025-07-12 14:30
 
+fastapi>=0.110
+uvicorn>=0.27
+python-multipart>=0.0.9
 tqdm>=4.0.0
+
