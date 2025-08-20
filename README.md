@@ -1,13 +1,3 @@
-# Language: text
-# Lines of Code: 52
-# File: README.md
-# Version: 1.0.02
-# Project: ChatGPT Conversation Exporter
-# Repository: chatgpt_exporter
-# Author: Rod Sanchez
-# Created: 2025-07-12 05:54
-# Last Edited: 2025-07-13 10:00
-
 # ChatGPT Conversation Exporter
 
 ChatGPT Conversation Exporter provides both a Tkinter GUI and a modern web interface for exporting conversations from a ChatGPT ZIP archive. Supported export formats include plain text, HTML, Markdown, and SQLite.
