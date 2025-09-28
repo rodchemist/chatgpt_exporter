@@ -1,0 +1,288 @@
+#!/usr/bin/env python3
+"""
+Agent Port Manager
+=================
+Integrates AI agents with Rod-Corp port registry for intelligent service discovery.
+"""
+
+import os
+import sys
+import json
+import subprocess
+from typing import Dict, List, Optional
+from port_registry import RodCorpPortRegistry, get_rodcorp_port_map
+
+class AgentPortManager:
+    """Manages port awareness for AI agents"""
+
+    def __init__(self):
+        self.registry = RodCorpPortRegistry()
+
+    def get_available_ai_services(self) -> Dict[str, Dict]:
+        """Get all available AI interaction services"""
+        port_map = self.registry.get_port_map()
+        return port_map.get("ai_agents", {})
+
+    def get_service_url(self, service_name: str) -> Optional[str]:
+        """Get URL for a specific AI service"""
+        services = self.get_available_ai_services()
+        if service_name in services:
+            info = services[service_name]
+            protocol = "https" if info.get("protocol") == "https" else "http"
+            return f"{protocol}://{info['host']}:{info['port']}"
+        return None
+
+    def discover_ai_interaction_servers(self) -> List[Dict]:
+        """Discover all AI interaction servers in the Rod-Corp network"""
+        services = self.get_available_ai_services()
+        servers = []
+
+        for service_name, info in services.items():
+            if "ai-interaction-server" in service_name.lower():
+                servers.append({
+                    "name": service_name,
+                    "url": f"http://{info['host']}:{info['port']}",
+                    "port": info["port"],
+                    "agent_id": info["agent_id"],
+                    "status": info["status"],
+                    "description": info.get("description", ""),
+                    "last_seen": info.get("last_seen")
+                })
+
+        return servers
+
+    def find_best_ai_server(self) -> Optional[Dict]:
+        """Find the best available AI interaction server"""
+        servers = self.discover_ai_interaction_servers()
+
+        # Filter active servers
+        active_servers = [s for s in servers if s["status"] == "active"]
+
+        if not active_servers:
+            return None
+
+        # Sort by last seen (most recent first)
+        active_servers.sort(key=lambda x: x.get("last_seen", ""), reverse=True)
+
+        return active_servers[0]
+
+    def create_agent_context(self) -> str:
+        """Create context information about available services for AI agents"""
+        port_map = self.registry.get_port_map()
+
+        context = f"""
+# Rod-Corp Service Discovery Context
+Generated: {os.popen('date').read().strip()}
+
+## Available AI Interaction Services
+"""
+
+        ai_agents = port_map.get("ai_agents", {})
+        if ai_agents:
+            for service, info in ai_agents.items():
+                context += f"""
+### {service}
+- URL: http://{info['host']}:{info['port']}
+- Agent ID: {info['agent_id']}
+- Status: {info['status']}
+- Description: {info.get('description', 'N/A')}
+- Last Seen: {info.get('last_seen', 'N/A')}
+"""
+        else:
+            context += "\nNo AI interaction services currently registered.\n"
+
+        context += f"""
+## Other Rod-Corp Services
+
+### API Servers
+"""
+        api_servers = port_map.get("api_servers", {})
+        for service, info in api_servers.items():
+            context += f"- {service}: http://{info['host']}:{info['port']}\n"
+
+        context += f"""
+### Web Interfaces
+"""
+        web_interfaces = port_map.get("web_interfaces", {})
+        for service, info in web_interfaces.items():
+            context += f"- {service}: http://{info['host']}:{info['port']}\n"
+
+        context += f"""
+### Database Services
+"""
+        databases = port_map.get("databases", {})
+        for service, info in databases.items():
+            context += f"- {service}: {info['host']}:{info['port']}\n"
+
+        context += f"""
+
+## Agent Communication Protocol
+
+When interacting with other AI agents or services:
+1. Use the URLs provided above for direct communication
+2. Register your own services using the port registry API
+3. Update your status regularly to maintain service discovery
+4. Use /port-registry endpoints for dynamic service discovery
+
+## Service Discovery Commands
+
+To get current service map:
+```bash
+curl http://localhost:[AI_INTERACTION_PORT]/port-registry
+```
+
+To find available port for new service:
+```bash
+curl http://localhost:[AI_INTERACTION_PORT]/port-registry/available?service_type=ai-agent
+```
+
+To register a new service:
+```bash
+curl -X POST http://localhost:[AI_INTERACTION_PORT]/port-registry/register \
+  -H "Content-Type: application/json" \
+  -d '{{"port": 49200, "service_name": "my-ai-service", "service_type": "ai-agent"}}'
+```
+"""
+
+        return context
+
+    def get_agent_discovery_script(self) -> str:
+        """Generate shell script for agent service discovery"""
+        return '''#!/bin/bash
+# Rod-Corp Agent Service Discovery Script
+# Auto-generated by Agent Port Manager
+
+# Function to discover AI interaction servers
+discover_ai_servers() {
+    echo "🔍 Discovering AI Interaction Servers in Rod-Corp network..."
+
+    # Try to find any AI interaction server
+    for port in 49152 49200 49300 8080 8081 8082; do
+        if curl -s http://localhost:$port/health >/dev/null 2>&1; then
+            echo "✅ Found AI server at http://localhost:$port"
+
+            # Get port registry
+            REGISTRY=$(curl -s http://localhost:$port/port-registry 2>/dev/null)
+            if [ $? -eq 0 ]; then
+                echo "📊 Rod-Corp Port Registry:"
+                echo "$REGISTRY" | python3 -m json.tool 2>/dev/null || echo "$REGISTRY"
+            fi
+
+            return 0
+        fi
+    done
+
+    echo "❌ No AI interaction servers found"
+    return 1
+}
+
+# Function to register current agent
+register_agent() {
+    local port=$1
+    local service_name=$2
+    local server_port=${3:-49152}
+
+    echo "📝 Registering agent: $service_name on port $port"
+
+    curl -X POST "http://localhost:$server_port/port-registry/register" \
+        -H "Content-Type: application/json" \
+        -d "{\\"port\\": $port, \\"service_name\\": \\"$service_name\\", \\"service_type\\": \\"ai-agent\\"}" \
+        2>/dev/null
+}
+
+# Function to get best AI server
+get_best_ai_server() {
+    echo "🎯 Finding best AI interaction server..."
+
+    # This would be implemented with actual logic
+    echo "http://localhost:49152"  # Default fallback
+}
+
+# Export functions for use in other scripts
+export -f discover_ai_servers
+export -f register_agent
+export -f get_best_ai_server
+
+# Auto-discover if script is run directly
+if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
+    discover_ai_servers
+fi
+'''
+
+    def close(self):
+        """Close registry connection"""
+        if self.registry:
+            self.registry.close()
+
+# Convenience functions for integration with AI agents
+def get_ai_service_context() -> str:
+    """Get context about available AI services for agent use"""
+    manager = AgentPortManager()
+    context = manager.create_agent_context()
+    manager.close()
+    return context
+
+def find_available_ai_server() -> Optional[str]:
+    """Find URL of best available AI interaction server"""
+    manager = AgentPortManager()
+    server = manager.find_best_ai_server()
+    manager.close()
+
+    if server:
+        return server["url"]
+    return None
+
+def discover_rodcorp_services() -> Dict[str, Dict]:
+    """Discover all Rod-Corp services"""
+    try:
+        return get_rodcorp_port_map()
+    except:
+        return {}
+
+if __name__ == "__main__":
+    # CLI interface for agent port management
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Rod-Corp Agent Port Manager")
+    parser.add_argument("--discover", action="store_true", help="Discover available services")
+    parser.add_argument("--context", action="store_true", help="Generate agent context")
+    parser.add_argument("--script", action="store_true", help="Generate discovery script")
+    parser.add_argument("--find-server", action="store_true", help="Find best AI server")
+
+    args = parser.parse_args()
+
+    manager = AgentPortManager()
+
+    try:
+        if args.discover:
+            services = manager.get_available_ai_services()
+            print(json.dumps(services, indent=2))
+
+        elif args.context:
+            context = manager.create_agent_context()
+            print(context)
+
+        elif args.script:
+            script = manager.get_agent_discovery_script()
+            print(script)
+
+        elif args.find_server:
+            server = manager.find_best_ai_server()
+            if server:
+                print(server["url"])
+            else:
+                print("No AI servers found")
+                sys.exit(1)
+
+        else:
+            # Default: show discovered servers
+            servers = manager.discover_ai_interaction_servers()
+            if servers:
+                print("🤖 Available AI Interaction Servers:")
+                for server in servers:
+                    print(f"  • {server['name']}: {server['url']} ({server['status']})")
+            else:
+                print("❌ No AI interaction servers found")
+
+    finally:
+        manager.close()

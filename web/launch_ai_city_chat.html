@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI City Chat Launcher</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .launcher-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .city-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .description {
+            color: #64748b;
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+
+        .launch-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .launch-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .status-info {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            text-align: left;
+        }
+
+        .status-item {
+            margin: 0.5rem 0;
+            font-size: 0.875rem;
+            color: #475569;
+        }
+
+        .status-item strong {
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+    <div class="launcher-container">
+        <div class="city-icon">🏙️</div>
+        <h1>AI City Chat</h1>
+        <p class="description">
+            Welcome to the AI City Chat Interface! Connect with specialized AI agents
+            and services running on your local AI City instance.
+        </p>
+
+        <a href="html/ai_city_chat.html" class="launch-button">
+            Launch Chat Interface
+        </a>
+
+        <div class="status-info">
+            <div class="status-item">
+                <strong>API Endpoint:</strong> http://localhost:9000/api/chat
+            </div>
+            <div class="status-item">
+                <strong>WebSocket:</strong> ws://localhost:8765
+            </div>
+            <div class="status-item">
+                <strong>Features:</strong> Real-time chat, 8 specialized agents, theme toggle
+            </div>
+            <div class="status-item">
+                <strong>Compatibility:</strong> Chrome, Firefox, Safari, Edge
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-redirect after 3 seconds if user doesn't click
+        setTimeout(() => {
+            const button = document.querySelector('.launch-button');
+            button.style.background = '#10b981';
+            button.textContent = 'Auto-launching in 2 seconds...';
+
+            setTimeout(() => {
+                window.location.href = 'html/ai_city_chat.html';
+            }, 2000);
+        }, 3000);
+    </script>
+</body>
+</html>
